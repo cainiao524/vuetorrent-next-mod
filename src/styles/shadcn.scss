@@ -1,0 +1,544 @@
+/* =====================================================
+   shadcn/ui design tokens
+   ===================================================== */
+:root {
+  --radius: 0.625rem;
+
+  --background: rgb(var(--v-theme-background, 255, 255, 255));
+  --foreground: rgb(var(--v-theme-on-background, var(--v-theme-on-surface, 9, 9, 11)));
+  --card: rgb(var(--v-theme-surface, var(--v-theme-background, 255, 255, 255)));
+  --card-foreground: rgb(var(--v-theme-on-surface, 9, 9, 11));
+  --popover: rgb(var(--v-theme-surface, 255, 255, 255));
+  --popover-foreground: rgb(var(--v-theme-on-surface, 9, 9, 11));
+  --primary: rgb(var(--v-theme-primary, 24, 24, 27));
+  --primary-foreground: rgb(var(--v-theme-on-primary, 250, 250, 250));
+  --secondary: rgb(var(--v-theme-secondary, 244, 244, 245));
+  --secondary-foreground: rgb(var(--v-theme-on-secondary, 24, 24, 27));
+  --muted: rgb(var(--v-theme-surface-variant, var(--v-theme-secondary, 244, 244, 245)));
+  --muted-foreground: rgb(var(--v-theme-muted-foreground, 113, 113, 122));
+  --accent: rgb(var(--v-theme-surface-variant, 244, 244, 245));
+  --accent-foreground: rgb(var(--v-theme-on-surface, 24, 24, 27));
+  --destructive: rgb(var(--v-theme-red, var(--v-theme-destructive, 220, 38, 38)));
+  --destructive-foreground: rgb(var(--v-theme-on-red, var(--v-theme-on-destructive, 250, 250, 250)));
+  --border: rgb(var(--v-theme-border, 228, 228, 231));
+  --input: rgb(var(--v-theme-input, 228, 228, 231));
+  --ring: rgb(var(--v-theme-ring, 24, 24, 27));
+  --sidebar: rgb(var(--v-theme-navbar, var(--v-theme-surface, 255, 255, 255)));
+
+  --chart-1: hsl(12 76% 61%);
+  --chart-2: hsl(173 58% 39%);
+  --chart-3: hsl(197 37% 24%);
+  --chart-4: hsl(43 74% 66%);
+  --chart-5: hsl(27 87% 67%);
+}
+
+/* =====================================================
+   Base typography
+   ===================================================== */
+html,
+body {
+  font-family:
+    'Inter',
+    'Roboto',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}
+
+.v-application {
+  font-family: inherit;
+  letter-spacing: 0;
+  background-color: var(--background);
+}
+
+.v-application .text-h1,
+.v-application .text-h2,
+.v-application .text-h3,
+.v-application .text-h4,
+.v-application .text-h5,
+.v-application .text-h6,
+.v-application .text-subtitle-1,
+.v-application .text-subtitle-2,
+.v-application .text-body-1,
+.v-application .text-body-2,
+.v-application .text-button {
+  font-family: inherit;
+  letter-spacing: 0;
+}
+
+.v-application .v-card-title,
+.v-application .v-card-subtitle,
+.v-application .v-list-item-title,
+.v-application .v-list-item-subtitle,
+.v-application .v-label,
+.v-application .v-field__input {
+  letter-spacing: 0;
+}
+
+.text-foreground {
+  color: var(--foreground);
+}
+
+.text-muted-foreground {
+  color: var(--muted-foreground);
+}
+
+/* =====================================================
+   App bar
+   ===================================================== */
+.v-application .v-app-bar {
+  background-color: var(--background) !important;
+  border-bottom: 1px solid var(--border);
+  box-shadow: none !important;
+}
+
+.v-application .v-app-bar .v-toolbar__content {
+  gap: 6px;
+}
+
+/* =====================================================
+   Inset app content panel
+   ===================================================== */
+.v-main.app-main {
+  padding-top: var(--v-layout-top, 64px);
+  padding-right: var(--v-layout-right, 0px);
+  padding-bottom: var(--v-layout-bottom, 0px);
+  padding-left: var(--v-layout-left, 0px);
+}
+
+.v-main.app-main .app-content {
+  min-height: 100%;
+  background-color: var(--background);
+}
+
+/* =====================================================
+   Navigation drawer
+   ===================================================== */
+.v-application .v-navigation-drawer {
+  background-color: var(--sidebar) !important;
+  box-shadow: none !important;
+}
+
+.v-application .v-navigation-drawer--left {
+  border-right: 1px solid var(--border);
+}
+
+.v-application .v-navigation-drawer--right {
+  border-left: 1px solid var(--border);
+}
+
+.v-navigation-drawer .v-list {
+  padding-inline: 8px;
+}
+
+.v-navigation-drawer .v-list-item {
+  border-radius: calc(var(--radius) - 2px);
+  margin-block: 2px;
+}
+
+.v-navigation-drawer .v-list-item:hover {
+  background-color: color-mix(in srgb, var(--accent) 65%, transparent);
+}
+
+.v-navigation-drawer .v-list-item:has(.stat-section) {
+  margin: 0;
+}
+
+/* =====================================================
+   Buttons
+   ===================================================== */
+.v-btn {
+  border-radius: calc(var(--radius) - 2px);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.v-btn--variant-elevated {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: none;
+}
+
+.v-btn--variant-elevated:hover {
+  background-color: color-mix(in srgb, var(--primary) 88%, transparent);
+}
+
+.v-btn--variant-elevated.v-btn--color-error,
+.v-btn--variant-elevated.v-btn--color-destructive {
+  background-color: var(--destructive);
+  color: var(--destructive-foreground);
+}
+
+.v-btn--variant-elevated.v-btn--color-error:hover,
+.v-btn--variant-elevated.v-btn--color-destructive:hover {
+  background-color: color-mix(in srgb, var(--destructive) 88%, transparent);
+}
+
+.v-btn--variant-tonal {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.v-btn--variant-outlined {
+  border: 1px solid var(--input);
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.v-btn--variant-outlined:hover {
+  background-color: var(--accent);
+}
+
+.v-btn--variant-outlined.v-btn--color-error,
+.v-btn--variant-outlined.v-btn--color-destructive {
+  border-color: color-mix(in srgb, var(--destructive) 45%, transparent);
+  color: var(--destructive);
+}
+
+.v-btn--variant-text:hover,
+.v-btn--variant-plain:hover {
+  background-color: var(--accent);
+}
+
+/* =====================================================
+   Text fields, selects and autocompletes
+   ===================================================== */
+.v-field {
+  background-color: var(--background) !important;
+  border: 1px solid var(--input) !important;
+  border-radius: calc(var(--radius) - 2px) !important;
+  box-shadow: none !important;
+}
+
+.v-field--variant-solo-filled {
+  background-color: var(--background) !important;
+}
+
+.v-field--variant-solo,
+.v-field--variant-solo-filled,
+.v-field--variant-filled {
+  box-shadow: none !important;
+}
+
+.v-field--focused {
+  border-color: var(--ring) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 12%, transparent) !important;
+}
+
+.v-field__outline {
+  display: none;
+}
+
+.v-field__input {
+  color: var(--foreground);
+  font-size: 14px;
+}
+
+.v-field__prepend-inner > .v-icon,
+.v-field__append-inner > .v-icon,
+.v-field__clearable .v-icon {
+  color: var(--muted-foreground);
+}
+
+.v-label {
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+
+.v-input__details {
+  font-size: 12px;
+}
+
+.v-select .v-field__input,
+.v-autocomplete .v-field__input {
+  font-size: 14px;
+}
+
+/* =====================================================
+   Cards
+   ===================================================== */
+.v-application .v-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  color: var(--card-foreground);
+}
+
+.v-application .v-card-title {
+  letter-spacing: -0.01em;
+}
+
+.v-application .v-card--flat {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.v-card .v-card-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.v-card .v-card-subtitle {
+  color: var(--muted-foreground);
+}
+
+.v-card .v-card-actions {
+  padding-inline: 16px;
+  padding-bottom: 16px;
+}
+
+.v-overlay__content > .v-card {
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.1);
+}
+
+/* =====================================================
+   Tables
+   ===================================================== */
+.v-application .v-table {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.v-table .v-table__wrapper > table > thead > tr > th {
+  background-color: color-mix(in srgb, var(--muted) 55%, transparent);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.v-table .v-table__wrapper > table > tbody > tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.v-table .v-table__wrapper > table > tbody > tr:last-child {
+  border-bottom: none;
+}
+
+.v-table .v-table__wrapper > table > tbody > tr:hover {
+  background-color: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.v-table td {
+  font-size: 14px;
+}
+
+.vt-resizable-table #torrentList tbody tr.selected {
+  background-color: color-mix(in srgb, var(--primary) 8%, transparent) !important;
+}
+
+.vt-resizable-table #torrentList tbody tr.selected td {
+  border-top: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* =====================================================
+   Segmented controls and search input
+   ===================================================== */
+.segmented-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 2px);
+  background-color: color-mix(in srgb, var(--muted) 65%, transparent);
+}
+
+.segmented-control .v-btn {
+  border-radius: calc(var(--radius) - 2px);
+  background-color: transparent;
+  color: var(--muted-foreground);
+}
+
+.segmented-control .v-btn:hover {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+
+.segmented-control .v-btn.segmented-active {
+  background-color: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+.torrent-search .v-field {
+  background-color: color-mix(in srgb, var(--muted) 50%, transparent) !important;
+  border-color: transparent !important;
+  border-radius: 12px !important;
+}
+
+.torrent-search .v-field--focused {
+  background-color: var(--card) !important;
+  border-color: var(--ring) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 12%, transparent) !important;
+}
+
+/* =====================================================
+   Chips and badges
+   ===================================================== */
+.v-chip {
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.v-chip:not([class*='v-chip--color']) {
+  background-color: var(--secondary);
+  border: 1px solid var(--border);
+  color: var(--secondary-foreground);
+}
+
+/* =====================================================
+   Menus, popovers and dialogs
+   ===================================================== */
+.v-overlay__content > .v-list {
+  background-color: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.1);
+  color: var(--popover-foreground);
+  padding: 4px;
+}
+
+.v-list {
+  background-color: transparent;
+}
+
+.v-list-item {
+  border-radius: calc(var(--radius) - 4px);
+  margin: 1px 0;
+}
+
+.v-list-item:hover,
+.v-list-item--active {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.v-list-item-title {
+  font-size: 14px;
+}
+
+.v-list-item-subtitle {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+/* =====================================================
+   Tabs
+   ===================================================== */
+.v-tabs {
+  border-bottom: 1px solid var(--border);
+}
+
+.v-tab {
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.v-tab--selected {
+  color: var(--foreground);
+}
+
+.v-slide-group__indicator {
+  background-color: var(--primary);
+  height: 2px;
+}
+
+/* =====================================================
+   Switches and checkboxes
+   ===================================================== */
+.v-switch .v-switch__track {
+  border: 1px solid var(--input);
+  border-radius: 999px;
+}
+
+.v-switch--selected .v-switch__track {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.v-switch .v-switch__thumb {
+  background-color: var(--background);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
+}
+
+.v-checkbox .v-selection-control__input,
+.v-checkbox-btn .v-selection-control__input {
+  border-radius: 4px;
+}
+
+/* =====================================================
+   Sliders and progress bars
+   ===================================================== */
+.v-slider__track-background,
+.v-slider__track-fill {
+  border-radius: 999px;
+}
+
+.v-progress-linear__background {
+  background-color: var(--muted) !important;
+  opacity: 1;
+}
+
+.v-progress-linear__determinate,
+.v-progress-linear__indeterminate {
+  border-radius: 999px;
+}
+
+.v-progress-linear__determinate {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+/* =====================================================
+   Pagination
+   ===================================================== */
+.v-pagination__item,
+.v-pagination__navigation {
+  border-radius: calc(var(--radius) - 4px);
+}
+
+/* =====================================================
+   Dividers and misc
+   ===================================================== */
+.v-divider {
+  border-color: var(--border);
+}
+
+.v-tooltip {
+  font-size: 12px;
+}
+
+/* =====================================================
+   Toasts
+   ===================================================== */
+.Vue-Toastification__toast {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.1);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.Vue-Toastification__toast--success {
+  border-color: color-mix(in srgb, #16a34a 45%, transparent);
+}
+
+.Vue-Toastification__toast--error {
+  border-color: color-mix(in srgb, #dc2626 45%, transparent);
+}
+
+.Vue-Toastification__toast--warning {
+  border-color: color-mix(in srgb, #d97706 45%, transparent);
+}
