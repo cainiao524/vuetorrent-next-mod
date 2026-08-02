@@ -26,16 +26,124 @@
 
 ## 安装
 
-### 使用发行包
+构建完成后的 WebUI 是一组静态网页文件，运行时不需要 Node.js。推荐根据使用场景选择以下两种方式。
+
+### 方式一：使用 Nginx 独立部署
+
+这是主项目和测试项目并行运行时的推荐方式。Nginx 同时负责提供 WebUI 静态文件和转发 qBittorrent API：
+
+```text
+浏览器
+  │
+  ▼
+Nginx
+├─ /             返回 WebUI 静态文件
+└─ /api/v2/*     转发给 qBittorrent Web API
+```
+
+Nginx 不是在服务器上执行 WebUI。JavaScript、样式和字体已经包含在构建产物中，Nginx 只负责将这些文件发送给浏览器。
+
+#### 目录结构
+
+从[发行页面](https://github.com/cainiao524/vuetorrent-next-mod/releases)下载 `vuetorrent.zip`，解压后将 `public` 目录中的内容复制到 `webui`：
+
+```text
+vuetorrent-next-mod-deploy/
+├─ docker-compose.yml
+├─ nginx.conf
+└─ webui/
+   ├─ index.html
+   ├─ assets/
+   └─ 其他静态文件
+```
+
+`webui` 目录中必须直接包含 `index.html`，不能多嵌套一层 `public`。
+
+#### Docker Compose 配置
+
+```yaml
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: vuetorrent-next-mod
+    restart: unless-stopped
+    ports:
+      - '<WEBUI_PORT>:80'
+    volumes:
+      - ./webui:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+```
+
+将 `<WEBUI_PORT>` 替换为准备提供 WebUI 的主机端口。主项目和测试项目应使用不同的目录、容器名称和端口。
+
+#### Nginx 配置
+
+```nginx
+server {
+    listen 80;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/v2/ {
+        proxy_pass http://<QBITTORRENT_HOST>:<QBITTORRENT_PORT>/api/v2/;
+
+        proxy_http_version 1.1;
+        proxy_set_header Host $proxy_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        client_max_body_size 100M;
+    }
+}
+```
+
+将 `<QBITTORRENT_HOST>` 和 `<QBITTORRENT_PORT>` 替换为 qBittorrent Web API 的实际地址。以上请求头与
+[qBittorrent 官方 Nginx 反向代理文档](https://github.com/qbittorrent/qBittorrent/wiki/NGINX-Reverse-Proxy-for-Web-UI)保持一致。
+
+启动和检查：
+
+```bash
+docker compose up -d
+docker compose ps
+docker compose logs nginx
+```
+
+更新 `nginx.conf` 后可以执行：
+
+```bash
+docker compose restart nginx
+```
+
+如果启用了 qBittorrent 的 Host 请求头验证，请同步配置允许的域名或地址。不要为了省事关闭身份验证，也不要直接通过未加密的公网 HTTP 暴露 WebUI。
+
+### 方式二：直接导入 qBittorrent
+
+这是最简单的部署方式，由 qBittorrent 自身同时提供 WebUI 静态文件和 `/api/v2/` 接口，不需要额外运行 Nginx。
 
 1. 从[发行页面](https://github.com/cainiao524/vuetorrent-next-mod/releases)下载 `vuetorrent.zip`。
-2. 将压缩包解压到 qBittorrent 可以访问的固定目录。
+2. 将压缩包解压到 qBittorrent 可以读取的固定目录。
 3. 打开 qBittorrent 设置中的“网页用户界面”。
 4. 启用“使用替代网页用户界面”。
-5. 将文件路径指向解压后的目录。
+5. 将文件路径指向解压后的 `public` 目录，也就是直接包含 `index.html` 的目录。
 6. 保存设置并刷新 qBittorrent 网页界面。
 
-如果页面无法加载，请确认填写的是包含 `index.html` 的目录，并检查 qBittorrent 进程是否有权读取该目录。
+如果页面无法加载，请检查路径层级和读取权限。修改前建议保留一个可以恢复默认 WebUI 的管理入口。
+
+更多配置说明可以参考 [qBittorrent 官方替代 WebUI 使用文档](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage)。
+
+### 隐私与安全
+
+- 分享配置或提交问题时，请隐藏真实公网地址、域名、NAS 目录、用户名、密码、Cookie 和 API 密钥。
+- 内网 IP 和端口通常不能从互联网直接访问，但仍可能暴露家庭网络与服务布局，公开示例建议使用占位符。
+- 如果需要从公网访问，建议使用 HTTPS、强密码、防火墙或可信 VPN。
+- 不要将 `.env`、反向代理认证文件或私钥提交到仓库。
 
 ### 从源码构建
 
@@ -46,7 +154,7 @@ npm ci
 npm run build
 ```
 
-构建结果位于 `vuetorrent` 目录，可按照发行包的方式部署。
+构建结果位于 `vuetorrent` 目录，其中 `vuetorrent/public` 是包含 `index.html` 的静态文件目录，可按照上述任一方式部署。
 
 ## 本地开发
 
