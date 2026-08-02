@@ -123,7 +123,7 @@ onBeforeUnmount(() => {
     </div>
 
     <v-row class="ma-0 pa-0">
-      <v-tabs v-model="tab" bg-color="primary" grow show-arrows>
+      <v-tabs v-model="tab" class="settings-primary-tabs" grow show-arrows>
         <v-tab
           v-if="isEnhancedEdition"
           value="enhancedEdition"
@@ -202,4 +202,21 @@ onBeforeUnmount(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.settings-primary-tabs {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--muted-foreground);
+}
+
+.settings-primary-tabs :deep(.v-tab--selected) {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.settings-primary-tabs :deep(.v-slide-group__prev),
+.settings-primary-tabs :deep(.v-slide-group__next) {
+  color: var(--muted-foreground);
+}
+</style>

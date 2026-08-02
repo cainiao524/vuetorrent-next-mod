@@ -1,139 +1,107 @@
-# VueTorrent
+# VueTorrent Next Mod
 
-The sleekest looking WebUI for qBittorrent made with Vue.js!
+基于 [VueTorrent](https://github.com/VueTorrent/VueTorrent) 重构的 qBittorrent 第三方网页界面，整体布局以 [Transmission Next UI](https://github.com/hisproc/transmission-next-ui)
+为主要设计参考，并融入 [shadcn/ui](https://github.com/shadcn-ui/ui) 的视觉语言。
 
-[![Discord](https://img.shields.io/discord/1170618192956243998?logo=discord)](https://discord.gg/KDQP7fR467)
+[![发行版本](https://img.shields.io/github/v/release/cainiao524/vuetorrent-next-mod)](https://github.com/cainiao524/vuetorrent-next-mod/releases)
+[![下载次数](https://img.shields.io/github/downloads/cainiao524/vuetorrent-next-mod/total)](https://github.com/cainiao524/vuetorrent-next-mod/releases)
+[![许可证](https://img.shields.io/github/license/cainiao524/vuetorrent-next-mod)](LICENSE)
+[![qBittorrent](https://img.shields.io/badge/qBittorrent-4.4%2B-2f67ba)](https://www.qbittorrent.org/)
 
-![VueTorrent](https://cdn.jsdelivr.net/gh/VueTorrent/VueTorrent@master/VueTorrent-logo.png)
+## 界面预览
 
-![Vue](https://img.shields.io/badge/Vue-%5E3.4.26-brightgreen) ![Vuetify](https://img.shields.io/badge/Vuetify-%5E3.6.4-brightgreen)
-![qBittorrent](https://img.shields.io/badge/qBittorrent-4.4%2B-brightgreen)
+![VueTorrent Next Mod 简体中文仪表盘](docs/screenshots/vuetorrent-next-mod-dashboard.png)
 
-![stars](https://img.shields.io/github/stars/VueTorrent/VueTorrent) ![Forks](https://img.shields.io/github/forks/VueTorrent/VueTorrent)
-![Issues](https://img.shields.io/github/issues/VueTorrent/VueTorrent) ![Closed](https://img.shields.io/github/issues-closed/VueTorrent/VueTorrent)
-![Closed PR](https://img.shields.io/github/issues-pr-closed/VueTorrent/VueTorrent) ![Version](https://img.shields.io/github/v/release/VueTorrent/vuetorrent)
-![Test Status](https://img.shields.io/github/actions/workflow/status/VueTorrent/vuetorrent/test.yml)
-![Downloads](https://img.shields.io/github/downloads/VueTorrent/VueTorrent/total)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor_Covenant-2.1-4baaaa.svg)](.github/CODE_OF_CONDUCT.md)
+预览中的任务和速度来自内置模拟数据，不代表真实下载活动。
 
-## Screenshots
+## 设计特点
 
-- Desktop
+- 参考 Transmission Next UI 的固定侧栏、状态入口、统计卡片和信息密度。
+- 使用接近 shadcn/ui 的颜色变量、边框、圆角、间距和交互状态。
+- 重新设计深色与浅色主题，支持原有主题切换能力。
+- 默认使用信息更完整的表格视图，并保留列表与网格视图。
+- 完整保留 VueTorrent 的任务管理、搜索、订阅、日志和设置能力。
+- 新增并完善简体中文导航、仪表盘和设置界面。
+- 适配桌面端与窄屏设备。
 
-<p>
-  <img src="docs/screenshots/screenshot-desktop.webp" width="800" alt="Screenshot Desktop (Light Mode)" />
-</p>
+## 安装
 
-- Desktop Dark Mode
+### 使用发行包
 
-<p>
-  <img src="docs/screenshots/screenshot-desktop-dark-mode.webp" width="800" alt="Screenshot Desktop (Dark Mode)" />
-</p>
+1. 从[发行页面](https://github.com/cainiao524/vuetorrent-next-mod/releases)下载 `vuetorrent.zip`。
+2. 将压缩包解压到 qBittorrent 可以访问的固定目录。
+3. 打开 qBittorrent 设置中的“网页用户界面”。
+4. 启用“使用替代网页用户界面”。
+5. 将文件路径指向解压后的目录。
+6. 保存设置并刷新 qBittorrent 网页界面。
 
-- Mobile Light Mode
+如果页面无法加载，请确认填写的是包含 `index.html` 的目录，并检查 qBittorrent 进程是否有权读取该目录。
 
-<p>
-  <img src="docs/screenshots/screenshot-mobile.webp" width="400" alt="Screenshot Mobile Dashboard (Light Mode)" />
-  <img src="docs/screenshots/screenshot-mobile-navbar.webp" width="400" alt="Screenshot Mobile Navbar (Light Mode)" /> 
-</p>
+### 从源码构建
 
-- Mobile Dark Mode
+```bash
+git clone https://github.com/cainiao524/vuetorrent-next-mod.git
+cd vuetorrent-next-mod
+npm ci
+npm run build
+```
 
-<p>
-  <img src="docs/screenshots/screenshot-mobile-dark-mode.webp" width="400" alt="Screenshot Mobile Dashboard (Dark Mode)" />
-  <img src="docs/screenshots/screenshot-mobile-navbar-dark-mode.webp" width="400" alt="Screenshot Mobile Navbar (Dark Mode)" /> 
-</p>
+构建结果位于 `vuetorrent` 目录，可按照发行包的方式部署。
 
-## Demo
+## 本地开发
 
-A live demo **with mocked data** is available here: <https://vuetorrent.github.io/demo>
+```bash
+npm ci
+npm run dev
+```
 
-<!-- prettier-ignore -->
-> [!NOTE]
-> This version isn't connected to a qBittorrent instance.
->
-> Don't try to download torrents or change preferences, it won't work 😉
+复制 `.env.sample` 为 `.env` 后，可以启用模拟数据并调整本地开发参数。
 
-## Installation
+常用检查命令：
 
-Checkout the [wiki](https://github.com/VueTorrent/VueTorrent/wiki/Installation)!
+```bash
+npm run check-build
+npm test
+npm run build
+```
 
-## Development
+## 主要功能
 
-- Clone the repo
-- `npm install`
-- `npm start`
-- `npm run lint` (to check for problems in code)
-- `npm run lint:fix` (to fix common problems)
-- `docker-compose up -d` (starts a qbittorrent docker, optional)
-- Open the WebUI on localhost with the default credentials
-  - See [#1720](https://github.com/VueTorrent/VueTorrent/issues/1720) for more details
-- Make sure WebUI > "Host header validation" is disabled in the qBittorrent preferences
-- Copy `.env.sample` to `.env` to tweak your dev environment (e.g. mocked data)
+- 添加、删除、暂停、继续和重命名种子。
+- 查看文件、Tracker、用户、内容、标签与分类信息。
+- 管理下载顺序、速度限制和分享限制。
+- 查看会话速度、传输统计、磁盘空间和分享率。
+- 使用内置种子搜索、RSS 资讯和 qBittorrent 日志。
+- 配置任务列表字段、卡片布局、侧栏和主题。
+- 支持快捷键、批量选择和移动端布局。
+- 兼容 qBittorrent Enhanced Edition 的相关设置。
 
-## Features
+## 简体中文
 
-- Torrents
-  - add / remove / pause / resume / rename torrents
-  - selectively download files
-  - view info / trackers / peers / content / tags & categories
-  - search for new torrents straight from the WebUI!
-- Keyboard shortcuts!
-  - Mac keymap is supported (use <kbd>Cmd</kbd> instead of <kbd>Ctrl</kbd>)
-  - Press <kbd>Escape</kbd> to dismiss any dialogs or to return to Dashboard view
-  - Dashboard
-    - Select all torrents with <kbd>Ctrl</kbd>-<kbd>A</kbd>
-    - Focus search input with <kbd>Ctrl</kbd>-<kbd>F</kbd>
-      - Press again to enable native browser search
-    - When no dialogs are opened, press <kbd>Escape</kbd> to unfocus search input
-      - Press again to unselect all torrents
-    - Delete selected torrents with <kbd>Delete</kbd> (<kbd>Fn</kbd>-<kbd>Backspace</kbd> on Mac)
-    - <kbd>Ctrl</kbd>-click on a torrent card to enable multi-select mode
-    - Hold <kbd>Shift</kbd> and click on a torrent card to select all torrents between the last selected torrent and the clicked torrent
-- System
-  - see session stats (down / upload speed, session uploaded / downloaded, free space)
-  - beautiful transfer graphs
-  - change the most common settings
-- Extra features the default WebUI doesn't have
-  - mobile friendly! (can be installed as a PWA)
-  - Configureable Dashboard: choose which torrent properties are shown for both busy and completed torrents
-- Optimized for the latest version of qBittorrent
-- Additional backend for improved experience, [see the repo for more info](https://github.com/VueTorrent/vuetorrent-backend)
-  - This is a work in progress, and is not required to use VueTorrent
-  - Stores server-side settings
-- Supports [qBittorrent Enhanced Edition](https://github.com/c0re100/qBittorrent-Enhanced-Edition) preferences
+进入“设置 → VueTorrent → 常规设置 → 语言”，选择“简体中文”并点击保存按钮即可切换。
 
-## Important Information
+本项目优先复用 VueTorrent 官方语言包，仅为重构后新增的导航和仪表盘字段补充翻译。
 
-VueTorrent is a **WebUI** (think of it as a "visual skin") that uses qBittorrent's WebAPI, enabling full compatibility with automation solutions like the *arr stack.
+## 与上游项目的关系
 
-Everything that is compatible with the classic qBittorrent WebUI will work regardless of the WebUI you chose to use, whether its VueTorrent or another one.
+本项目是社区修改版，不是 VueTorrent、Transmission Next UI 或 shadcn/ui 的官方发行版本。
 
-## Contributing
+- 功能基础：[VueTorrent](https://github.com/VueTorrent/VueTorrent)
+- 主要布局参考：[Transmission Next UI](https://github.com/hisproc/transmission-next-ui)
+- 视觉风格参考：[shadcn/ui](https://github.com/shadcn-ui/ui)
+- qBittorrent：[qBittorrent](https://github.com/qbittorrent/qBittorrent)
 
-We gladly accept contributions!
+建议在升级 VueTorrent 上游版本前备份当前配置，并在测试环境中确认兼容性。
 
-Any help is appreciated, whether it's reporting bugs, suggesting enhancements, contributing code or localizing the app.
+## 问题反馈
 
-See the [Contributing Guidelines](https://github.com/VueTorrent/VueTorrent/blob/master/.github/CONTRIBUTING.md) for more information.
+如果发现界面、翻译或兼容性问题，请在本仓库的[问题页面](https://github.com/cainiao524/vuetorrent-next-mod/issues)提交反馈，并附上：
 
-## Support
+- qBittorrent 版本。
+- 浏览器及版本。
+- 使用的主题和语言。
+- 可复现步骤及截图。
 
-- [![Discord](https://img.shields.io/discord/1170618192956243998?logo=discord)](https://discord.gg/KDQP7fR467)
-- [![Wiki](https://img.shields.io/badge/Wiki-blue)](https://github.com/VueTorrent/VueTorrent/wiki)
-- [![FAQ](https://img.shields.io/badge/FAQ-orange)](https://github.com/VueTorrent/VueTorrent/wiki/FAQ)
+## 许可证
 
-If any of the above didn't help, feel free to open an issue!
-
-See the [Contributing Guidelines](https://github.com/VueTorrent/VueTorrent/blob/master/.github/CONTRIBUTING.md) for more information.
-
-## Funding
-
-All donations are appreciated but purely optional.
-
-Checkout the sponsor section of the repository.
-
-## Contributors
-
-- [@m4ximuel](https://github.com/m4ximuel)
-- [@Larsluph](https://github.com/Larsluph)
+本项目沿用 VueTorrent 的 [GNU 通用公共许可证第三版](LICENSE)。修改和分发时请继续遵守许可证要求，并保留上游项目的版权与许可证信息。
