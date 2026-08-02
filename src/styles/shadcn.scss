@@ -441,6 +441,23 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+.v-tabs.shadcn-surface-tabs {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--muted-foreground);
+}
+
+.shadcn-surface-tabs .v-tab--selected {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.shadcn-surface-tabs .v-slide-group__prev,
+.shadcn-surface-tabs .v-slide-group__next {
+  color: var(--muted-foreground);
+}
+
 .v-tab {
   font-weight: 500;
   letter-spacing: 0;

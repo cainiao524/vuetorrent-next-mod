@@ -119,7 +119,7 @@ onBeforeUnmount(() => {
     </div>
 
     <v-row class="ma-0 pa-0">
-      <v-tabs v-model="tab" bg-color="primary" grow show-arrows>
+      <v-tabs v-model="tab" class="shadcn-surface-tabs" grow show-arrows>
         <v-tab v-for="{ text, value } in tabs" :key="value" :value="value" :text="text" replace :to="{ name: 'torrentDetail', params: { hash, tab: value } }" />
       </v-tabs>
     </v-row>
